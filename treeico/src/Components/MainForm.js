@@ -1,7 +1,15 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class MainForm extends Component {
+// donations
+export class MainForm extends Component {
   render() {
     return <div>Home</div>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  contracts: state.contracts,
+});
+
+export default connect(mapStateToProps)(MainForm);

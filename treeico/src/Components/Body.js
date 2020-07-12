@@ -1,33 +1,18 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import { Typography, TextField } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import MainForm from "./MainForm";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // dapp
 import web3 from "../ethereumconfig/web3eth";
 import { getAcc } from "../ethereumconfig/web3eth";
-import { ContractData } from "../ethereumconfig/web3eth";
-import DeployContract from "../ethereumconfig/DeployContract";
 
-const styles = {
-  marginTop: "100px",
-  paper: {
-    textAlign: "start",
-    width: "inherit",
-    marginBottom: "5%",
-    padding: "30px",
-  },
-  ownerAddres: {
-    margin: 0,
-    width: "100px",
-  },
-  button: {
-    marginTop: "30px",
-    padding: "5px",
-  },
-};
+// styles
+import { styles } from "../assets/styles";
 
 export default class Body extends Component {
   constructor(props) {
@@ -35,13 +20,21 @@ export default class Body extends Component {
     this.state = {
       address: "",
       err: false,
+      amount: 0,
     };
     this.getter = this.getter.bind(this);
   }
   async componentDidMount() {
     getAcc().then(console.log);
   }
-  getter() {}
+  async getter() {
+    //
+    const balance = await web3.eth.getBalance(this.state.address);
+    const ether = web3.utils.fromWei(balance, "ether");
+    this.setState({
+      amount: ether,
+    });
+  }
   render() {
     return (
       <div style={styles}>
@@ -52,7 +45,10 @@ export default class Body extends Component {
                 Contribute by Donating Tokens from Ether Wallet
               </Typography>
               <Typography>
-                Current Rate :: <b>0.25 Ether</b>
+                <b>Check if balance satisfy for Sale</b>
+              </Typography>
+              <Typography>
+                Current Rate :: <b>0.001 Ether</b>
               </Typography>
               <form
                 onSubmit={(e) => {
@@ -74,18 +70,6 @@ export default class Body extends Component {
                       });
                     }}
                   />
-                  <TextField
-                    type="text"
-                    label="Contract Name"
-                    placeholder="Contract Name"
-                    error={this.state.err}
-                    fullWidth
-                    onChange={(e) => {
-                      this.setState({
-                        contractName: e.target.value,
-                      });
-                    }}
-                  />
                 </span>
 
                 <Button
@@ -102,17 +86,29 @@ export default class Body extends Component {
           <Grid>
             <Paper style={styles.paper}>
               <Typography>Amount</Typography>
+              <Typography>
+                Amount in Wallet ::{" "}
+                {this.state.amount == 0 ? "" : this.state.amount}
+              </Typography>
+              {this.state.amount == 0 ? (
+                ""
+              ) : (
+                <span>
+                  Max Tokens possible to Sell{this.state.amount / 0.001}
+                </span>
+              )}
             </Paper>
           </Grid>
         </Grid>
-        <Grid container spacing={2} direction="row">
-          <Grid item sm={6}>
-            <MainForm />
-          </Grid>
-          <Grid item sm={6}>
-            <div>Hey</div>
-          </Grid>
-        </Grid>
+        {this.state.err ? (
+          <div>
+            <Paper>
+              <Typography color="primary">
+                Can Donate Max of {this.state.amount / 0.001} Tokens
+              </Typography>
+            </Paper>
+          </div>
+        ) : null}
       </div>
     );
   }

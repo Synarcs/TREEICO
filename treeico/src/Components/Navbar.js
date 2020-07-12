@@ -5,9 +5,17 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import { Typography, Container } from "@material-ui/core";
 
+import { Link } from "react-router-dom";
+
 const styles = {
   button: {
     marginLeft: "auto",
+    textDecoration: "none",
+    color: "yello",
+  },
+  but: {
+    marginLeft: "auto",
+    padding: "2px",
   },
 };
 
@@ -17,16 +25,32 @@ export default class Navbar extends Component {
       <AppBar position="fixed" color="primary">
         <Toolbar>
           <Typography>The Main Dapp App</Typography>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => {
-              alert("dapp App");
-            }}
-            style={styles.button}
-          >
-            Home
-          </Button>
+          <div style={styles.but}>
+            <Link to="/CheckBalance">
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  alert("Check Balance to Start a Sale");
+                }}
+                style={styles.button}
+              >
+                Balance
+              </Button>
+            </Link>
+            <Link to="/BorrowMoney">
+              <Button
+                color="inherit"
+                variant="contained"
+                onClick={() => {
+                  alert("start a value");
+                }}
+                style={styles.button}
+              >
+                Start Sale
+              </Button>
+            </Link>
+          </div>
         </Toolbar>
       </AppBar>
     );
