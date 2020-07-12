@@ -1,0 +1,27 @@
+{
+  "name": "ERC20",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "node ethereum/compile.js",
+    "test": "mocha",
+    "testrun": "concurrently \"npm run compile\" \"npm run test\"",
+    "deploy": "node ethereum/deploy/deploy.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.34",
+    "concurrently": "^5.2.0",
+    "fs-extra": "^9.0.1",
+    "ganache-cli": "^6.9.1",
+    "mocha": "^8.0.1",
+    "solc": "^0.4.17",
+    "web3": "^1.2.9"
+  }
+}
