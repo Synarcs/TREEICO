@@ -1,3 +1,5 @@
 node_modules/
 treeico/node_modules
 Dapp.png
+server/*.json
+server/__pycache__/

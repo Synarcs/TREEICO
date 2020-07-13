@@ -38,7 +38,7 @@ export default class Navbar extends Component {
                 Balance
               </Button>
             </Link>
-            <Link to="/BorrowMoney">
+            <Link to="/StartSale">
               <Button
                 color="inherit"
                 variant="contained"

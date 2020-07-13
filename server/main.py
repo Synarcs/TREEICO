@@ -1,4 +1,7 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, redirect
+from flask import url_for, request
+from flask_cors import CORS
+
 from firebase_admin import firestore, credentials
 import firebase_admin
 import threading
@@ -16,15 +19,35 @@ def config():
 config()
 db = firestore.client()
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/', methods=["GET", "POST"])
 def Home():
-    db.collection('users').document('asasa').set({
-        "name": "asas"
-    })
-    return "done"
+    if request.method == "POST":
+        deployedAddress = request.form['addresses']
+        userAddress = request.form['address']
+        tokenForSale = request.form['tokenSale']
+        db.collection('contractAdmins').document('userAddress').update({
+            "userAddress": userAddress,
+            "tokenForSale": tokenForSale,
+            "deployedAddress": deployedAddress
+        })
+        return "the data is backed"
+    else:
+        return redirect(url_for('UserIndex', username="error holding"))
 
+
+@app.route('/user/<username>')
+def UserIndex(username):
+    if "vedang" in username:
+        redirect('/')
+    else:
+        return username
+
+
+with app.test_request_context():
+    print(url_for('UserIndex', username="kevin bach"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000)

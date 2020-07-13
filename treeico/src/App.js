@@ -3,27 +3,15 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from "./Components/Navbar";
 import Body from "./Components/Body";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 
 // redux
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 
-import { styles } from "./assets/styles";
-import { Typography } from "@material-ui/core";
-import { MainForm } from "./Components/MainForm";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#004d40",
-    },
-    secondary: {
-      main: "#303f9f",
-    },
-  },
-});
+import { theme } from "./assets/styles";
+import MainForm from "./Components/MainForm";
+import BorrowedSale from "./Components/BorrowedSale";
 
 class App extends React.Component {
   render() {
@@ -35,7 +23,12 @@ class App extends React.Component {
               <Navbar />
             </div>
             <Route exact path="/CheckBalance" component={Body} />
-            <Route exact path="/BorrowMoney" component={MainForm} />
+            <Route exact path="/StartSale" component={MainForm} />
+            <Route
+              exact
+              path="/BorrowTokens/:address"
+              component={BorrowedSale}
+            />
             {/* <Route path="/ViewTree" component={Tree} /> */}
           </Router>
         </MuiThemeProvider>

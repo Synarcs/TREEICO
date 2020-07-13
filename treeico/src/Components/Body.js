@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import MainForm from "./MainForm";
-import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
 
 // dapp
 import web3 from "../ethereumconfig/web3eth";
@@ -100,7 +99,7 @@ export default class Body extends Component {
             </Paper>
           </Grid>
         </Grid>
-        {this.state.err ? (
+        {this.state.amount !== 0 ? (
           <div>
             <Paper>
               <Typography color="primary">
