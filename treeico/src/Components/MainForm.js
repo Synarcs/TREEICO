@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
 import DisplayContracts from "./DisplayContracts";
 
 import PropTypes from "prop-types";
@@ -29,6 +30,12 @@ class MainForm extends Component {
   render() {
     return (
       <div style={styles.MainForm}>
+        <Container>
+          <Typography color="primary">
+            Single Ico Sale For Each Contract with Unlimited Offering
+          </Typography>
+        </Container>
+
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12}>
             <Paper style={styles.paper}>
@@ -93,8 +100,10 @@ class MainForm extends Component {
               </div>
             </Paper>
           </Grid>
+          {this.props.contracts.contracts.length > 0 ? (
+            <DisplayContracts history={this.props.history} />
+          ) : null}
         </Grid>
-        <DisplayContracts />
       </div>
     );
   }
