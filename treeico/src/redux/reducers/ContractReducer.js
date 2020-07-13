@@ -10,7 +10,7 @@ const init = {
   contracts: [], // all global store of contracts
 };
 import NodeRsa from "node-rsa";
-import { keys } from "../actions./configKeys";
+import { keys } from "../actions/configKeys";
 
 function getInfo(action, key) {
   const OwnerContractInfo = {

@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import web3 from "../ethereumconfig/web3eth";
 
 // actions
-import { MainOwner } from "../redux/actions./stateActions";
+import { MainOwner } from "../redux/actions/stateActions";
 import { styles } from "../assets/styles";
 import { Typography } from "@material-ui/core";
 
@@ -86,7 +86,7 @@ class MainForm extends Component {
                 />
                 <br />
                 <br />
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="secondary" type="submit">
                   Start Sale of Tokens
                 </Button>
               </form>

@@ -27,10 +27,13 @@ export const styles = {
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#004d40",
+      main: "#311b92",
     },
     secondary: {
-      main: "#303f9f",
+      main: "#2e7031",
+    },
+    mainButton: {
+      main: "#311b92",
     },
   },
 });
