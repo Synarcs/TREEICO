@@ -1,1 +1,1 @@
-export const keys = 160;
+export const keys = { b: 512 };

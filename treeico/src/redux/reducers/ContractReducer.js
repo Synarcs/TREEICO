@@ -16,7 +16,7 @@ function getInfo(action, key) {
   const OwnerContractInfo = {
     rootContract: action.payload.contract,
     deployedAddress: action.payload.addresses,
-    ownerAddress: key.encrypt(action.payload.address, "base64"),
+    ownerAddress: action.payload.address,
     tokenSale: action.payload.tokenSale,
     childDonars: [], // add each user amount of tokens taken
   };
@@ -26,15 +26,17 @@ function getInfo(action, key) {
 export default function (state = init, action) {
   switch (action.type) {
     case AddMainOwner:
-      const key = new NodeRsa({ keys });
-
+      const key = new NodeRsa(keys);
+      let val;
       if (state.contracts.length > 0) {
-        let val = state.contracts.filter((val) => {
-          if (action.payload.address == val.ownerAddress) {
-            return val;
+        val = state.contracts.filter((value) => {
+          if (action.payload.address == value.ownerAddress) {
+            return value;
           }
         });
+        console.log(val);
         if (val.length > 0) {
+          alert("Only one contract sale allowed till child fullfils");
           return {
             ...state,
           };

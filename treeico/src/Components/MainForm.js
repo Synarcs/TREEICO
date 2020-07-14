@@ -81,7 +81,6 @@ class MainForm extends Component {
                     this.setState({
                       TokenAmount: e.target.value,
                     });
-                    console.log(this.props.contracts);
                   }}
                 />
                 <br />

@@ -37,7 +37,6 @@ def Home():
     else:
         return redirect(url_for('UserIndex', username="error holding"))
 
-
 @app.route('/user/<username>')
 def UserIndex(username):
     if "vedang" in username:

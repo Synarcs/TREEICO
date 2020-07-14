@@ -14,10 +14,13 @@ import { Provider } from "react-redux";
 import { theme } from "./assets/styles";
 import MainForm from "./Components/MainForm";
 import BorrowedSale from "./Components/BorrowedSale";
-import DisplayContracts from "./Components/DisplayContracts";
 import web3 from "./ethereumconfig/web3eth";
+import DisplayContracts from "./Components/DisplayContracts";
 
 class App extends React.Component {
+  componentDidMount() {
+    store.dispatch(fetcher);
+  }
   render() {
     return (
       <Provider store={store}>
