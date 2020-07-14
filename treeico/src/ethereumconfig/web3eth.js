@@ -2,7 +2,7 @@ import Web3 from "web3";
 import erc from "../../../ethereum/build/Erc.json";
 import sale from "../../../ethereum/build/Sale.json";
 
-const ganacheProvider = "HTTP://127.0.0.1:7545";
+const ganacheProvider = "http://127.0.0.1:7545";
 const web3 = new Web3(new Web3.providers.HttpProvider(ganacheProvider));
 
 export const getAcc = async () => {

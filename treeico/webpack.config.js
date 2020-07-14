@@ -20,7 +20,14 @@ module.exports = {
     publicPath: "/",
     filename: "bundle.js",
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./dist/index.html",
+      hash: true,
+      inject: true,
+    }),
+  ],
   devServer: {
     historyApiFallback: true,
     contentBase: "./dist",

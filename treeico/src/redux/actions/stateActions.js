@@ -1,5 +1,5 @@
-import axios from "axios";
-import nodersa from "node-rsa";
+import firebase from "firebase";
+import bcrypt from "bcryptjs";
 
 // redux
 import { AddMainOwner, FetchAllData } from "../reducers/types";
@@ -10,24 +10,53 @@ export const MainOwner = (address, tokenSale) => {
   return async (dispatch) => {
     const contract = await DeployContract("ERC", address, tokenSale);
     const addresses = await contract.options.address;
-    axios
-      .post("/", {
-        addresses,
-        address,
-        tokenSale,
-      })
-      .then(console.log)
-      .catch((err) => {
-        console.log(err);
+    const contractMethods = await contract.methods;
+    localStorage.setItem(addresses, contract);
+    firebase
+      .firestore()
+      .collection("MainIconOwners")
+      .doc(addresses)
+      .get()
+      .then((data) => {
+        if (data.exists) {
+          // do nothing
+        } else {
+          firebase
+            .firestore()
+            .collection("MainIconOwners")
+            .doc(addresses)
+            .set({
+              deployedAddress: addresses,
+              ownerAddress: bcrypt.hashSync(address, 10),
+              tokenSale,
+              childDonars: [],
+              // contractMethods,
+            });
+        }
       });
     dispatch({
       type: AddMainOwner,
       payload: {
-        contract,
         addresses,
         address,
         tokenSale,
+        // contractMethods,
       },
     });
+  };
+};
+
+export const fetcher = () => {
+  return async (dispatch) => {
+    firebase
+      .firestore()
+      .collection("MainIconOwners")
+      .get()
+      .then((data) => {
+        dispatch({
+          type: FetchAllData,
+          payload: data.docs,
+        });
+      });
   };
 };

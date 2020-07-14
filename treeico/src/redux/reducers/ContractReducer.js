@@ -9,12 +9,11 @@ import {
 const init = {
   contracts: [], // all global store of contracts
 };
-import NodeRsa from "node-rsa";
 import { keys } from "../actions/configKeys";
 
 function getInfo(action, key) {
   const OwnerContractInfo = {
-    rootContract: action.payload.contract,
+    // contractMethods: action.payload.contractMethods,
     deployedAddress: action.payload.addresses,
     ownerAddress: action.payload.address,
     tokenSale: action.payload.tokenSale,
@@ -26,7 +25,7 @@ function getInfo(action, key) {
 export default function (state = init, action) {
   switch (action.type) {
     case AddMainOwner:
-      const key = new NodeRsa(keys);
+      const key = 10;
       let val;
       if (state.contracts.length > 0) {
         val = state.contracts.filter((value) => {
@@ -34,7 +33,6 @@ export default function (state = init, action) {
             return value;
           }
         });
-        console.log(val);
         if (val.length > 0) {
           alert("Only one contract sale allowed till child fullfils");
           return {
@@ -52,6 +50,16 @@ export default function (state = init, action) {
         return {
           ...state,
           contracts: [...state.contracts, OwnerContractInfo],
+        };
+      }
+    case FetchAllData:
+      const ServiceDate = action.payload.map((serverData) => {
+        return serverData.data();
+      });
+      if (ServiceDate.length > 0) {
+        return {
+          ...state,
+          contracts: ServiceDate,
         };
       }
     default:

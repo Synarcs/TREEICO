@@ -74,7 +74,7 @@ export default class Body extends Component {
                 <Button
                   color="secondary"
                   variant="contained"
-                  className={styles.button}
+                  style={styles.button}
                   type="submit"
                 >
                   Get Balance

@@ -10,6 +10,7 @@ import Container from "@material-ui/core/Container";
 // redux
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import { fetcher } from "./redux/actions/stateActions";
 
 import { theme } from "./assets/styles";
 import MainForm from "./Components/MainForm";
@@ -17,9 +18,14 @@ import BorrowedSale from "./Components/BorrowedSale";
 import web3 from "./ethereumconfig/web3eth";
 import DisplayContracts from "./Components/DisplayContracts";
 
+// second side Backup
+import { firebaseConfig } from "./redux/actions/configKeys";
+import firebase from "firebase";
+firebase.initializeApp(firebaseConfig);
+
 class App extends React.Component {
   componentDidMount() {
-    store.dispatch(fetcher);
+    store.dispatch(fetcher());
   }
   render() {
     return (
