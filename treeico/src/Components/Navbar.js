@@ -30,9 +30,7 @@ export default class Navbar extends Component {
               <Button
                 color="secondary"
                 variant="contained"
-                onClick={() => {
-                  alert("Check Balance to Start a Sale");
-                }}
+                onClick={() => {}}
                 style={styles.button}
               >
                 Balance
@@ -42,9 +40,7 @@ export default class Navbar extends Component {
               <Button
                 color="inherit"
                 variant="contained"
-                onClick={() => {
-                  alert("start a value");
-                }}
+                onClick={() => {}}
                 style={styles.button}
               >
                 Start Sale

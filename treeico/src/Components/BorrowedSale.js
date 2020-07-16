@@ -10,6 +10,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 // web3
 import { getOwnerContract } from "../ethereumconfig/ethAssets";
 import { Divider } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -25,7 +26,9 @@ class BorrowedSale extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.addChildDonarstoParent = this.addChildDonarstoParent.bind(this);
   }
+  async addChildDonarstoParent() {}
   handleClick() {
     this.setState({
       open: true,
@@ -57,6 +60,7 @@ class BorrowedSale extends Component {
     this.setState({
       contract,
     });
+    console.log(this.state.contract);
   }
   render() {
     return (
@@ -85,7 +89,7 @@ class BorrowedSale extends Component {
         <Divider />
         <Paper>
           <Button variant="outlined" onClick={this.handleClick}>
-            Borrow Some Tokens from this ICO
+            Click for More Info..
           </Button>
           <Snackbar
             open={this.state.open}
@@ -96,6 +100,48 @@ class BorrowedSale extends Component {
               Borrow Some Tokens from this ICO
             </Alert>
           </Snackbar>
+        </Paper>
+        <br />
+        <br />
+        <Paper>
+          <form
+            onSubmit={async (e) => {
+              this.addChildDonarstoParent;
+            }}
+          >
+            <TextField
+              type="text"
+              label="Ethereum Account Address to Transfer Money"
+              fullWidth
+              onChange={(e) => {
+                this.setState({
+                  address: e.target.value,
+                });
+              }}
+            />
+            <TextField
+              type="text"
+              disabled
+              fullWidth
+              value={`Deployed Address ${this.state.deployedAddress}`}
+            />
+            <TextField
+              type="text"
+              label="price for Each Token In Ether"
+              fullWidth
+              onChange={(e) => {
+                this.setState({
+                  TokenAmount: e.target.value,
+                });
+              }}
+            />
+            <br />
+            <br />
+            <br />
+            <Button variant="contained" color="secondary" type="submit">
+              Start Your Buisness from This ICO
+            </Button>
+          </form>
         </Paper>
       </div>
     );
