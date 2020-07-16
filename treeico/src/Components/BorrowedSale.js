@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 // material ui
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+// web3
+import { getOwnerContract } from "../ethereumconfig/ethAssets";
+import { Divider } from "@material-ui/core";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class BorrowedSale extends Component {
   constructor(props) {
@@ -12,9 +21,27 @@ class BorrowedSale extends Component {
     this.state = {
       deployedAddress: "",
       hash: "",
+      open: false,
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
-  componentDidMount() {
+  handleClick() {
+    this.setState({
+      open: true,
+    });
+  }
+
+  handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({
+      open: false,
+    });
+  }
+
+  async componentDidMount() {
     const {
       match: { params },
       location: { hash },
@@ -26,31 +53,49 @@ class BorrowedSale extends Component {
     let current = this.setState({
       rootDetails: current,
     });
+    const contract = await getOwnerContract(this.state.deployedAddress);
+    this.setState({
+      contract,
+    });
   }
   render() {
     return (
       <div style={{ marginTop: "100px" }}>
-        <Paper>
+        <Paper elevation={10}>
           {this.props.contracts.contracts.map((contract) => {
             if (contract.deployedAddress == this.state.deployedAddress) {
               return (
-                <div>
+                <div key={this.state.deployedAddress}>
                   <Typography>
-                    OwnerAddress :: {contract.ownerAddress}..
+                    <b>OwnerAddress</b> :: {contract.ownerAddress}..
                   </Typography>
                   <Typography>
-                    deployedAddress :: {this.state.deployedAddress}
+                    <b>deployedAddress</b>
+                    :: {this.state.deployedAddress}
                   </Typography>
                   <Typography>
-                    Number of Borrowers :: {contract.childDonars.length}
+                    <b>Number of Borrowers</b>
+                    :: {contract.childDonars.length}
                   </Typography>
                 </div>
               );
             }
           })}
         </Paper>
+        <Divider />
         <Paper>
-          <div>Home</div>
+          <Button variant="outlined" onClick={this.handleClick}>
+            Borrow Some Tokens from this ICO
+          </Button>
+          <Snackbar
+            open={this.state.open}
+            autoHideDuration={4000}
+            onClose={this.handleClose}
+          >
+            <Alert onClose={this.handleClose} severity="success">
+              Borrow Some Tokens from this ICO
+            </Alert>
+          </Snackbar>
         </Paper>
       </div>
     );

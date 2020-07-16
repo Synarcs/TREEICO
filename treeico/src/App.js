@@ -15,12 +15,14 @@ import { fetcher } from "./redux/actions/stateActions";
 import { theme } from "./assets/styles";
 import MainForm from "./Components/MainForm";
 import BorrowedSale from "./Components/BorrowedSale";
+import RedirectHome from "./Components/RedirectHome";
 import web3 from "./ethereumconfig/web3eth";
 import DisplayContracts from "./Components/DisplayContracts";
 
 // second side Backup
 import { firebaseConfig } from "./redux/actions/configKeys";
 import firebase from "firebase";
+import { BuyTokens } from "./Components/BuyTokens";
 firebase.initializeApp(firebaseConfig);
 
 class App extends React.Component {
@@ -45,6 +47,12 @@ class App extends React.Component {
                   path="/BorrowTokens/:address"
                   component={BorrowedSale}
                 />
+                <Route
+                  exact
+                  path="/:address/:DeployedAdmin"
+                  component={BuyTokens}
+                />
+                <Route exact path="/*" component={RedirectHome} />
               </Switch>
               {/* <Route path="/ViewTree" component={Tree} /> */}
             </Router>
